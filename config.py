@@ -3,6 +3,9 @@
 
 ##Standardmodus nach dem Einschalten des Controllers:
 defaultMode = 1
+# Befehlt zum einschalten:
+commandOn=["pilight-send","-p", "quigg_gt9000", "-i", "656022", "-u", "1", "-t"]
+commandOff=["pilight-send","-p", "quigg_gt9000", "-i", "656022", "-u", "1", "-f"]
 
 ## Einstellungen für Intervallschaltung
 # Pumpe alle N Minuten einschalten

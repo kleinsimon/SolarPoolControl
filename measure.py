@@ -28,10 +28,10 @@ def read_sensor(path):
 def switch(on):
   if (on):
     call(["gpio","write","0", "0"])
-    #call(["gpio","write","1", "0"])
+    call(["gpio","write","1", "0"])
   else:
     call(["gpio","write","0", "1"])
-    #call(["gpio","write","1", "1"])
+    call(["gpio","write","1", "1"])
 
 def getmode():
   try:
@@ -73,7 +73,7 @@ while 1:
     if (mode!=lastmode):	
       lastmode=mode
       switch(mode)
-      print("toggle")
+      print("toggle ")
       repr(mode)
       lastswitch=time.time()
     

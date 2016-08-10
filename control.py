@@ -1,10 +1,7 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
-import re, os, time, sys, subprocess, threading, pump, auto, interval, config
+import re, os, time, sys, subprocess, threading, pump, auto, interval, config, vars
 
-#System wide variables
-waittime=config.intervallPause * 60
-runtime=0
 
 def getmode(pin):
 	try:
@@ -20,30 +17,29 @@ def initgpio(pins):
 		subprocess.call(["gpio","mode",str(p),"up"])
 		
 def setmode(m):
-	global mode, runtime
+	if m!=vars.mode:
+		print("Switch to mode "+str(m))
+	
+	vars.mode = m
+
+def setstate():
 	state=0
-	if m==mode:
-		return
-	print("Mode "+str(m))
-	if m==1:
+	if vars.mode==1:
 		state = auto.state and interval.state
-	if m==2:
+	if vars.mode==2:
 		state = interval.state
-	if m==3:
+	if vars.mode==3:
 		state = 1
-	if m==4:
+	if vars.mode==4:
 		state = 0
-	mode = m
 	pump.switch(state)
 	if state:
-		runtime+=1
+		vars.runtime+=config.runtimeSleep
 
 def main():
-	global mode
-	mode=0
 	modes=[1,2,3,4]
 	pins=[24,25,22,23]
-	interval=0.05
+
 	initgpio(pins)
 	setmode(config.defaultMode)
 
@@ -51,14 +47,18 @@ def main():
 		for m in modes:
 			if getmode(pins[m-1]):
 				setmode(m)
-		
-		time.sleep(interval)
+		setstate()
+
+		vars.waittime+=config.runtimeSleep
+		time.sleep(config.runtimeSleep)
 
 if __name__ == "__main__":
 	stopthread=threading.Event()
 	thread = threading.Thread(target=auto.run, args=(stopthread,), name='pumpauto')
-	thread.start()
 	threadistop=threading.Event()
 	threadi = threading.Thread(target=interval.run, args=(threadistop,), name='pumpinter')
+	#subprocess.call(config.commandInit)
+	#time.sleep(5)
+	thread.start()
 	threadi.start()
 	main()

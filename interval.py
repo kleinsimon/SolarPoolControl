@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
-import re, os, time, config, control
+import re, os, time, config, control, vars
 
 state=0
 
@@ -8,8 +8,12 @@ def run(stop_event):
 	global state
 
 	while not stop_event.wait(1):
-		if control.waittime>config.intervallPause*60:
-			if control.runtime<config.intervallRuntime*60:
+		if vars.waittime > config.intervallPause*60:
+			if vars.runtime<config.intervallRuntime*60:
+				print("Zeit ist rum... einschalten")
 				state=1
-		if control.waittime >= (config.intervallPause+config.intervallRuntime)*60:
-			control.waittime=0
+			else:
+				print("Und wieder aus")
+				vars.runtime=0
+				vars.waittime=0
+				state=0

@@ -24,21 +24,15 @@ def switch(on):
 		print('Switch off')
 		curState=0
 
-def getmode(pin):
-	try:
-		r = check_output(["gpio","read",str(pin)])
-		return int(r)==0
-	except subprocess.CalledProcessError as e:
-		print ("Error getting status of gpio")
+if __name__ == "__main__":
+	if len(sys.argv) == 1:
+		command = ""
+	else:
+		command = sys.argv[1]
 
-if len(sys.argv) == 1:
-	command = ""
-else:
-	command = sys.argv[1]
-
-if command == "on":
-	switch(True)
-elif command == "off":
-	switch(False)
+	if command == "on":
+		switch(True)
+	elif command == "off":
+		switch(False)
 
   

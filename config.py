@@ -10,17 +10,19 @@ commandOff=["pilight-send","-S", "127.0.0.1","-P", "5000","-p", "quigg_gt9000", 
 
 ## Allgemeine Variablen
 #Mindestzeit zwischen Schaltvorgängen (Sekunden)
-pumpMinTogglePause = 30
+pumpMinTogglePause = 5
 
 ## Einstellungen für Intervallschaltung
 # Pumpe alle N Minuten einschalten
 intervallPause = 10
+
 # Pumpe für N Minuten einschalten
 intervallRuntime = 1
 
 ## Einstellungen für Auto (Temperaturdifferenzschaltung)
 #Temperaturdifferenz zum Einschalten
 autoTempDiff=3
+
 #Mindestzeit zwischen den Schaltvorgängen (Sekunden)
 autoToggleWait=30
 
@@ -29,3 +31,9 @@ runtimeSleep=0.05
 
 #Sensor Path
 sensorPath="/sys/bus/w1/devices/"
+
+#Save Path
+savePath="/mnt/mmcblk0p2/conf/"
+
+#Dateiname
+saveFile="pumpmode.txt"

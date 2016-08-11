@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
-import re, os, time, sys, subprocess, threading, pump, auto, interval, config, vars
+import os, time, sys, subprocess, threading, pump, auto, interval, config, vars
 
 def getmode(pin):
 	try:
@@ -8,7 +8,6 @@ def getmode(pin):
 		return int(r)==0
 	except subprocess.CalledProcessError as e:
 		print ("Error getting status of gpio")
-
 
 def initgpio(pins):
 	for p in pins:
@@ -18,8 +17,8 @@ def initgpio(pins):
 def setmode(m):
 	if m!=vars.mode:
 		print("Switch to mode "+str(m))
-	
-	vars.mode = m
+		vars.mode = m
+		saveMode(m)
 
 def setstate():
 	state=0
@@ -35,12 +34,25 @@ def setstate():
 	if state:
 		vars.runtime+=config.runtimeSleep
 
+def saveMode(mode):
+	with open(config.savePath + "/" + config.saveFile, "w") as f:
+		f.write(str(mode))
+	
+def readSavedMode():
+	m=config.defaultMode
+	try:
+		with open(config.savePath + "/" + config.saveFile, "r") as f:
+			m=int(f.read())
+	except:
+		pass
+	return m
+	
 def main():
 	modes=[1,2,3,4]
 	pins=[24,25,22,23]
 
 	initgpio(pins)
-	setmode(config.defaultMode)
+	setmode(readSavedMode())
 
 	while 1:
 		for m in modes:

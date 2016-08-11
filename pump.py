@@ -3,7 +3,7 @@
 import time, sys, config
 from subprocess import call
 
-curState=0
+curState=2
 call(config.commandOff)
 lastToggle=0
 
@@ -12,18 +12,14 @@ def switch(on):
 	if (time.time()-lastToggle) < config.pumpMinTogglePause and lastToggle!=0:
 		return
 
-	if (on and not curState):
-		#call(["gpio","write","0", "0"])
-		#call(["gpio","write","1", "0"])
+	if (on and curState!=1):
 		call(config.commandOn)
 		call(config.commandOn)
 		print('Switch on')
 		curState=1
 		lastToggle=time.time()
 		
-	elif (not on and curState):
-		#call(["gpio","write","0", "1"])
-		#call(["gpio","write","1", "1"])
+	elif (not on and curState!=0):
 		call(config.commandOff)
 		call(config.commandOff)
 		print('Switch off')

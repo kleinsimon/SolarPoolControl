@@ -8,11 +8,15 @@ commandOn=["pilight-send","-S", "127.0.0.1","-P", "5000","-p", "quigg_gt9000", "
 # Befehl zum Ausschalten:
 commandOff=["pilight-send","-S", "127.0.0.1","-P", "5000","-p", "quigg_gt9000", "-i", "656022", "-u", "1", "-f"]
 
+## Allgemeine Variablen
+#Mindestzeit zwischen Schaltvorgängen (Sekunden)
+pumpMinTogglePause = 30
+
 ## Einstellungen für Intervallschaltung
 # Pumpe alle N Minuten einschalten
-intervallPause = 0.1
+intervallPause = 10
 # Pumpe für N Minuten einschalten
-intervallRuntime = 0.1
+intervallRuntime = 1
 
 ## Einstellungen für Auto (Temperaturdifferenzschaltung)
 #Temperaturdifferenz zum Einschalten
@@ -22,3 +26,6 @@ autoToggleWait=30
 
 #Laufzeit interval (0.05 = 50ms)
 runtimeSleep=0.05 
+
+#Sensor Path
+sensorPath="/sys/bus/w1/devices/"

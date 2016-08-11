@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import re, os, time, sys, subprocess, threading, pump, auto, interval, config, vars
 
-
 def getmode(pin):
 	try:
 		r = subprocess.check_output(["gpio","read",str(pin)])
@@ -25,7 +24,7 @@ def setmode(m):
 def setstate():
 	state=0
 	if vars.mode==1:
-		state = auto.state and interval.state
+		state = auto.state or interval.state
 	if vars.mode==2:
 		state = interval.state
 	if vars.mode==3:

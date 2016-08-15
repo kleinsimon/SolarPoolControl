@@ -9,17 +9,21 @@ lastToggle=0
 
 def switch(on):
 	global curState, lastToggle
-	if (time.time()-lastToggle) < config.pumpMinTogglePause and lastToggle!=0:
+	if (time.time()-lastToggle) < config.pumpMinTogglePause:
 		return
+	doSwitch(on)
 
-	if (on and curState!=1):
+def doSwitch(on):
+	global curState, lastToggle
+
+	if (on):
 		call(config.commandOn)
 		call(config.commandOn)
 		print('Switch on')
 		curState=1
 		lastToggle=time.time()
 		
-	elif (not on and curState!=0):
+	elif (not on):
 		call(config.commandOff)
 		call(config.commandOff)
 		print('Switch off')

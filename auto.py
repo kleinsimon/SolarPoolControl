@@ -13,7 +13,9 @@ def run(stop_event):
 		s = sensor.getValues()
 		if len(s) >= 2:
 			dt = abs(s[0]-s[1])
-			print ('T1: {:.2f}, T2: {:.2f}, Diff: {:.2f}'.format(s[0], s[1], dt))
+			print ("T1: {:.2f}, T2: {:.2f}, Diff: {:.2f}".format(s[0], s[1], dt))
 			state = dt >= config.autoTempDiff
 			#print(state)
+		else:
+			print ("Sensors not working")
 

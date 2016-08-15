@@ -9,6 +9,13 @@ commandOn=["pilight-send","-S", "127.0.0.1","-P", "5000","-p", "quigg_gt9000", "
 commandOff=["pilight-send","-S", "127.0.0.1","-P", "5000","-p", "quigg_gt9000", "-i", "656022", "-u", "1", "-f"]
 
 ## Allgemeine Variablen
+
+#Begin der Ruhezeit (Abends). Format: HHMM also 1730 für 17:30
+timerBeginSilence = 1800
+
+#Ende der Ruhezeit (Morgens). Format: HHMM also 1000 für 10:00
+timerEndSilence = 1000
+
 #Mindestzeit zwischen Schaltvorgängen (Sekunden)
 pumpMinTogglePause = 5
 

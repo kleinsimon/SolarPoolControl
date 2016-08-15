@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
-import os, time, sys, subprocess, threading, pump, auto, interval, config, vars
+import os, time, sys, subprocess, threading, pump, auto, interval, config, vars, timer
 
 def getmode(pin):
 	try:
@@ -23,9 +23,9 @@ def setmode(m):
 def setstate():
 	state=0
 	if vars.mode==1:
-		state = auto.state or interval.state
+		state = timer.state and (auto.state or interval.state)
 	if vars.mode==2:
-		state = interval.state
+		state = timer.state and interval.state
 	if vars.mode==3:
 		state = 1
 	if vars.mode==4:
@@ -66,10 +66,14 @@ def main():
 if __name__ == "__main__":
 	stopthread=threading.Event()
 	thread = threading.Thread(target=auto.run, args=(stopthread,), name='pumpauto')
+	thread.start()
+	
 	threadistop=threading.Event()
 	threadi = threading.Thread(target=interval.run, args=(threadistop,), name='pumpinter')
-	#subprocess.call(config.commandInit)
-	#time.sleep(5)
-	thread.start()
 	threadi.start()
+	
+	threadtstop=threading.Event()
+	threadt = threading.Thread(target=timer.run, args=(threadtstop,), name='pumptimer')
+	threadt.start()
+	
 	main()

@@ -1,6 +1,8 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
-import os, time, sys, subprocess, threading, pump, auto, interval, config, vars, timer
+import os, time, sys, subprocess, threading, pump, auto, interval, config, vars, timer, display
+
+modechar=[0,"a","i","1","0"]
 
 def getmode(pin):
 	try:
@@ -15,9 +17,11 @@ def initgpio(pins):
 		subprocess.call(["gpio","mode",str(p),"up"])
 		
 def setmode(m):
+	global modechar
 	if m!=vars.mode:
 		print("Switch to mode "+str(m))
 		vars.mode = m
+		display.show(modechar[m])
 		saveMode(m)
 
 def setstate():

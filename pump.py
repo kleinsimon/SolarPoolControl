@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
-import time, sys, config
+import time, sys, config, display
 from subprocess import call
 
 curState=2
@@ -29,6 +29,7 @@ def doSwitch(on):
 		print('Switch off')
 		curState=0
 		lastToggle=time.time()
+	display.blink()
 
 if __name__ == "__main__":
 	if len(sys.argv) == 1:

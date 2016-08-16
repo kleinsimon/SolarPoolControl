@@ -44,3 +44,7 @@ savePath="/mnt/mmcblk0p2/conf/"
 
 #Dateiname
 saveFile="pumpmode.txt"
+
+#GPIO Pins für Display (Nach wiringpi)
+gpioPins=[0,1,3,4,5,10,11]
+gpioDotPin=6

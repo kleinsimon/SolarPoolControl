@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
-import config, sensor
+import config, sensor, display
 
 state=0
 
@@ -18,4 +18,5 @@ def run(stop_event):
 			#print(state)
 		else:
 			print ("Sensors not working")
+			display.show("e")
 

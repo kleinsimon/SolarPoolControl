@@ -28,6 +28,9 @@ sets["j"] = [0,0,1,1,1,0,1]
 
 
 def init():
+	call(["gpio","mode",str(config.gpioDotPin),"out"])
+	call(["gpio","write",str(config.gpioDotPin),"0"])
+
 	for pin in config.gpioPins:
 		call(["gpio","mode",str(pin),"out"])
 		call(["gpio","write",str(pin),"0"])

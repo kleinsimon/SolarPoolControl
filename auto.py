@@ -15,8 +15,8 @@ def run(stop_event):
 			dt = abs(s[0]-s[1])
 			print ("T1: {:.2f}, T2: {:.2f}, Diff: {:.2f}".format(s[0], s[1], dt))
 			state = dt >= config.autoTempDiff
-			#print(state)
 		else:
 			print ("Sensors not working")
 			display.show("e")
+			sensor.initSensors()
 

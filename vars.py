@@ -5,3 +5,4 @@
 waittime=0
 runtime=0
 mode=0
+lastSwitchOnTime=0

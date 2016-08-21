@@ -26,6 +26,7 @@ def setmode(m):
 
 def setstate():
 	state=0
+	oldstate=vars.mode
 	if vars.mode==1:
 		state = timer.state and (auto.state or interval.state)
 	if vars.mode==2:
@@ -35,8 +36,12 @@ def setstate():
 	if vars.mode==4:
 		state = 0
 	pump.switch(state)
-	if state:
-		vars.runtime+=config.runtimeSleep
+	
+	if state and !oldstate:
+		vars.lastSwitchOnTime=time.time()
+	elif !state and oldstate:
+		vars.runtime+=time.time()-vars.lastSwitchOnTime()
+		vars.lastSwitchOnTime=0
 
 def saveMode(mode):
 	with open(config.savePath + "/" + config.saveFile, "w") as f:

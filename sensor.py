@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 import re, os, time, sys, config
 
+sensors=None
+
 def readSensor(path):
 	value = 0
 	try:
@@ -33,8 +35,12 @@ def getValues():
 		res.append(readSensor(s))
 	return res
 
-sensors=getSensors()
-	
+def initSensors():
+	global sensors
+	sensors=getSensors()
+
+initSensors()
+
 if __name__ == "__main__":
 	print (getValues())
 

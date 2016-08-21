@@ -21,20 +21,20 @@ pumpMinTogglePause = 5
 
 ## Einstellungen für Intervallschaltung
 # Pumpe alle N Minuten einschalten
-intervallPause = 10
+intervallPause = 60
 
 # Pumpe für N Minuten einschalten
-intervallRuntime = 1
+intervallRuntime = 10
 
 ## Einstellungen für Auto (Temperaturdifferenzschaltung)
 #Temperaturdifferenz zum Einschalten
-autoTempDiff=3
+autoTempDiff=0.5
 
 #Mindestzeit zwischen den Schaltvorgängen (Sekunden)
 autoToggleWait=30
 
 #Laufzeit interval (0.05 = 50ms)
-runtimeSleep=0.05 
+runtimeSleep=0.05
 
 #Sensor Path
 sensorPath="/sys/bus/w1/devices/"

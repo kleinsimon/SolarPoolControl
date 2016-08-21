@@ -56,9 +56,9 @@ def init():
 		call(["gpio","mode",str(pin),"out"])
 		call(["gpio","write",str(pin),"0"])
 		
-def set(vars):
-	for i in range(0,len(vars)):
-		call(["gpio","write",str(config.gpioPins[i]),str(vars[i])])
+def set(v):
+	for i in range(0,len(v)):
+		call(["gpio","write",str(config.gpioPins[i]),str(v[i])])
 		
 def show(char):
 	global sets

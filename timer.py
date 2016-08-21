@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
-import time, config, vars, control
+import time, config, runvars, control
 
 state=2
 
@@ -16,6 +16,6 @@ def run(stop_event):
 				print("Daytime")
 			else:
 				print("Nighttime")
-				if vars.mode == 3:
-					vars.mode == 4
+				if runvars.mode == 3:
+					runvars.mode == 4
 					control.setstate()

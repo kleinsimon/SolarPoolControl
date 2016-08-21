@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
-import os, time, sys, subprocess, threading, pump, auto, interval, config, vars, timer, display
+import os, time, sys, subprocess, threading, pump, auto, interval, config, runvars, timer, display
 
 modechar=[0,"a","i","1","0"]
 
@@ -18,30 +18,30 @@ def initgpio(pins):
 		
 def setmode(m):
 	global modechar
-	if m!=vars.mode:
+	if m!=runvars.mode:
 		print("Switch to mode "+str(m))
-		vars.mode = m
+		runvars.mode = m
 		display.show(modechar[m])
 		saveMode(m)
 
 def setstate():
 	state=0
-	oldstate=vars.mode
-	if vars.mode==1:
+	oldstate=runvars.mode
+	if runvars.mode==1:
 		state = timer.state and (auto.state or interval.state)
-	if vars.mode==2:
+	if runvars.mode==2:
 		state = timer.state and interval.state
-	if vars.mode==3:
+	if runvars.mode==3:
 		state = 1
-	if vars.mode==4:
+	if runvars.mode==4:
 		state = 0
 	pump.switch(state)
 	
-	if state and !oldstate:
-		vars.lastSwitchOnTime=time.time()
-	elif !state and oldstate:
-		vars.runtime+=time.time()-vars.lastSwitchOnTime()
-		vars.lastSwitchOnTime=0
+	if state and not oldstate:
+		runvars.lastSwitchOnTime=time.time()
+	elif not state and oldstate:
+		runvars.runtime+=time.time()-runvars.lastSwitchOnTime
+		runvars.lastSwitchOnTime=0
 
 def saveMode(mode):
 	with open(config.savePath + "/" + config.saveFile, "w") as f:
@@ -69,7 +69,7 @@ def main():
 				setmode(m)
 		setstate()
 
-		vars.waittime+=config.runtimeSleep
+		runvars.waittime+=config.runtimeSleep
 		time.sleep(config.runtimeSleep)
 
 if __name__ == "__main__":

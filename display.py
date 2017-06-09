@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
 import sys, config
+import RPi.GPIO as GPIO
 from subprocess import call
 
 #translatePin=[11,12,13,15,16,18,22,7,3,5,24,26,19,21,23,8,10]
@@ -49,16 +50,25 @@ sets["t"] = [0,1,0,0,1,1,1]
 
 
 def init():
-	call(["gpio","mode",str(config.gpioDotPin),"out"])
-	call(["gpio","write",str(config.gpioDotPin),"0"])
+	#call(["gpio","mode",str(config.gpioDotPin),"out"])
+	#call(["gpio","write",str(config.gpioDotPin),"0"])
+	
+	GPIO.setmode(GPIO.BCM)
+	GPIO.setwarnings(False)
+	GPIO.setup(config.gpioDotPin,GPIO.OUT)
+	GPIO.output(config.gpioDotPin,GPIO.LOW)
 
 	for pin in config.gpioPins:
-		call(["gpio","mode",str(pin),"out"])
-		call(["gpio","write",str(pin),"0"])
+		#call(["gpio","mode",str(pin),"out"])
+		#call(["gpio","write",str(pin),"0"])
+		GPIO.setup(pin,GPIO.OUT)
+		GPIO.output(pin,GPIO.LOW)
 		
 def set(v):
 	for i in range(0,len(v)):
-		call(["gpio","write",str(config.gpioPins[i]),str(v[i])])
+		#call(["gpio","write",str(config.gpioPins[i]),str(v[i])])
+		GPIO.output(config.gpioPins[i],v[i])
+		
 		
 def show(char):
 	global sets
@@ -68,8 +78,10 @@ def show(char):
 	set(sets[char])
 	
 def blink():
-	call(["gpio","write",str(config.gpioDotPin),"1"])
-	call(["gpio","write",str(config.gpioDotPin),"0"])
+	#call(["gpio","write",str(config.gpioDotPin),"1"])
+	#call(["gpio","write",str(config.gpioDotPin),"0"])
+	GPIO.output(config.gpioDotPin,GPIO.HIGH)
+	GPIO.output(config.gpioDotPin,GPIO.LOW)
 	
 init()
 if __name__ == "__main__":

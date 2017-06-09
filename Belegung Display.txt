@@ -1,0 +1,13 @@
+Schwarz:	GND
+Rot			+5V
+Braun		GND
+Orange		GPIO4?	Reg		0	17
+Gelb		GND
+Grün		GPIO17	Takt	1	18
+
+Grün		GPIO18 Data		3	22
+Blau		GPIO22			4	23
+Lila		GPIO23			5	24
+Grau		GPIO24			6	25
+Weiß		Poti, 5V
+Orange		GND

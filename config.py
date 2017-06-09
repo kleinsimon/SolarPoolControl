@@ -11,30 +11,35 @@ commandOff=["pilight-send","-S", "127.0.0.1","-P", "5000","-p", "quigg_gt9000", 
 ## Allgemeine Variablen
 
 #Begin der Ruhezeit (Abends). Format: HHMM also 1730 für 17:30
-timerBeginSilence = 2300
+timerBeginSilence = 1700
 
 #Ende der Ruhezeit (Morgens). Format: HHMM also 1000 für 10:00
 timerEndSilence = 1000
 
 #Mindestzeit zwischen Schaltvorgängen (Sekunden)
-pumpMinTogglePause = 5
+pumpMinTogglePause = 10
 
 ## Einstellungen für Intervallschaltung
 # Pumpe alle N Minuten einschalten
 intervallPause = 60
 
 # Pumpe für N Minuten einschalten
-intervallRuntime = 10
+intervallRuntime = 5
 
 ## Einstellungen für Auto (Temperaturdifferenzschaltung)
 #Temperaturdifferenz zum Einschalten
-autoTempDiff=0.8
+#autoTempDiff=0.8
 
 #Temperaturänderung zum Schalten
-autoTempChange=0.15
+#autoTempChange=0.15
 
 #Anzahl an stetigen Temperatuen zum Schalten
-autoTempsLength=13
+#autoTempsLength=13
+
+#Differenz zum ein / aussschalten. 4°C an, 2°C Aus
+
+autoTempOn = 4
+autoTempOff = 2
 
 #Mindestzeit zwischen den Schaltvorgängen (Sekunden)
 #autoToggleWait=30
@@ -51,6 +56,11 @@ savePath="/mnt/mmcblk0p2/conf/"
 #Dateiname
 saveFile="pumpmode.txt"
 
-#GPIO Pins für Display (Nach wiringpi)
-gpioPins=[0,1,3,4,5,10,11]
-gpioDotPin=6
+#GPIO Pins für Display (Nach BCM)
+#gpioPins=[0,1,3,4,5,10,11]
+#gpioDotPin=6
+gpioPins=[17,18,22,23,24,8,7]
+gpioDotPin=25
+
+#Control GPIOs 1 2 3 4
+gpioBtnPins=[19,26,6,13]

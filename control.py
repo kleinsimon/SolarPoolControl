@@ -1,20 +1,26 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
 import os, time, sys, subprocess, threading, pump, auto, interval, config, runvars, timer, display
+import RPi.GPIO as GPIO
 
 modechar=[0,"a","i","1","0"]
 
 def getmode(pin):
 	try:
-		r = subprocess.check_output(["gpio","read",str(pin)])
+		#r = subprocess.check_output(["gpio","read",str(pin)])
+		r = GPIO.input(pin)
 		return int(r)==0
 	except subprocess.CalledProcessError as e:
 		print ("Error getting status of gpio")
 
 def initgpio(pins):
 	for p in pins:
-		subprocess.call(["gpio","mode",str(p),"in"])
-		subprocess.call(["gpio","mode",str(p),"up"])
+		GPIO.setmode(GPIO.BCM)
+		GPIO.setwarnings(False)
+		GPIO.setup(p, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+		
+		#subprocess.call(["gpio","mode",str(p),"in"])
+		#subprocess.call(["gpio","mode",str(p),"up"])
 		
 def setmode(m):
 	global modechar
@@ -58,7 +64,8 @@ def readSavedMode():
 	
 def main():
 	modes=[1,2,3,4]
-	pins=[24,25,22,23]
+	#pins=[24,25,22,23]
+	pins = config.gpioBtnPins
 
 	initgpio(pins)
 	setmode(readSavedMode())

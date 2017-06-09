@@ -13,12 +13,16 @@ def run(stop_event):
 			dt = abs(s[0]-s[1])
 			print ("T1: {:.2f}, T2: {:.2f}, Diff: {:.2f}".format(s[0], s[1], dt))
 
-			if (runvars.tFalling() and runvars.maxDiff() >= config.autoTempChange) or dt < config.autoTempDiff:
-				state = False
-			elif runvars.tRising() and dt >= config.autoTempDiff:
+			#if (runvars.tFalling() and runvars.maxDiff() >= config.autoTempChange) or dt < config.autoTempDiff:
+			#	state = False
+			#elif runvars.tRising() and dt >= config.autoTempDiff:
+			#	state = True
+			#runvars.addTemp(dt)
+			if dt >= config.autoTempOn:
 				state = True
+			elif dt <= config.autoTempOff:
+				state = False
 
-			runvars.addTemp(dt)
 		else:
 			print ("Sensors not working")
 			display.show("e")

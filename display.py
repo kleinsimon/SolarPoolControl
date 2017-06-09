@@ -1,91 +1,27 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
-import sys, config
+import sys, config, disp1602, time, runvars, pump, auto, timer
 import RPi.GPIO as GPIO
-from subprocess import call
 
-#translatePin=[11,12,13,15,16,18,22,7,3,5,24,26,19,21,23,8,10]
-sets={}
-# sets["0"] = [1,0,1,1,1,1,1]
-# sets["1"] = [0,0,0,0,1,0,1]
-# sets["2"] = [0,1,1,1,0,1,1]
-# sets["3"] = [0,1,0,1,1,1,1]
-# sets["4"] = [1,1,0,0,1,0,1]
-# sets["5"] = [1,1,0,1,1,1,0]
-# sets["6"] = [1,1,1,1,1,1,0]
-# sets["7"] = [0,0,0,0,1,1,1]
-# sets["8"] = [1,1,1,1,1,1,1]
-# sets["9"] = [1,1,0,0,1,1,1]
-# sets["a"] = [1,1,1,0,1,1,1]
-# sets["b"] = [1,1,1,1,1,0,0]
-# sets["c"] = [0,1,1,1,0,0,0]
-# sets["d"] = [0,1,1,1,1,0,1]
-# sets["e"] = [1,1,1,1,0,1,0]
-# sets["f"] = [1,1,1,0,0,1,0]
-# sets["g"] = [1,0,1,1,1,1,0]
-# sets["h"] = [1,1,1,0,1,0,1]
-# sets["i"] = [0,0,1,0,0,1,0]
-# sets["j"] = [0,0,1,1,1,0,1]
-sets["0"] = [1,0,1,1,1,1,1]
-sets["1"] = [1,0,1,0,0,0,0]
-sets["2"] = [0,1,1,1,0,1,1]
-sets["3"] = [1,1,1,1,0,1,0]
-sets["4"] = [1,1,1,0,1,0,0]
-sets["5"] = [1,1,0,1,1,1,0]
-sets["6"] = [1,1,0,1,1,1,1]
-sets["7"] = [1,0,1,1,0,0,0]
-sets["8"] = [1,1,1,1,1,1,1]
-sets["9"] = [1,1,1,1,1,0,0]
-sets["a"] = [1,1,1,1,1,0,1]
-sets["b"] = [1,1,0,0,1,1,1]
-sets["c"] = [0,1,0,0,0,1,1]
-sets["d"] = [1,1,1,0,0,1,1]
-sets["e"] = [0,1,0,1,1,1,1]
-sets["f"] = [0,1,0,1,1,0,1]
-sets["g"] = [1,0,0,1,1,1,1]
-sets["h"] = [1,1,1,0,1,0,1]
-sets["i"] = [0,0,0,1,0,0,1]
-sets["j"] = [1,0,1,0,0,1,1]
-sets["t"] = [0,1,0,0,1,1,1]
-
-
-def init():
-	#call(["gpio","mode",str(config.gpioDotPin),"out"])
-	#call(["gpio","write",str(config.gpioDotPin),"0"])
+def showData():
+	t = time.strftime("%H:%M")
+	m = config.modeNames[runvars.mode-1]
+	if runvars.mode == 1 and not(timer.state):
+		m = "Auto-Nacht"
+	s = config.stateNames[pump.curState]
+	dt = "%.3g" % (auto.dt)
 	
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setwarnings(False)
-	GPIO.setup(config.gpioDotPin,GPIO.OUT)
-	GPIO.output(config.gpioDotPin,GPIO.LOW)
-
-	for pin in config.gpioPins:
-		#call(["gpio","mode",str(pin),"out"])
-		#call(["gpio","write",str(pin),"0"])
-		GPIO.setup(pin,GPIO.OUT)
-		GPIO.output(pin,GPIO.LOW)
-		
-def set(v):
-	for i in range(0,len(v)):
-		#call(["gpio","write",str(config.gpioPins[i]),str(v[i])])
-		GPIO.output(config.gpioPins[i],v[i])
-		
-		
-def show(char):
-	global sets
-	if not char in sets:
-		print ("Not defined: " + str(char))
-		return
-	set(sets[char])
+	p1 = 16 - len(t) - len(m)
+	p2 = 16 - len(s) - len(dt)
+	
+	disp1602.lcd_message(1, m.ljust(len(m)+p1) + t)
+	disp1602.lcd_message(2, s.ljust(len(s)+p2) + dt)
 	
 def blink():
-	#call(["gpio","write",str(config.gpioDotPin),"1"])
-	#call(["gpio","write",str(config.gpioDotPin),"0"])
-	GPIO.output(config.gpioDotPin,GPIO.HIGH)
-	GPIO.output(config.gpioDotPin,GPIO.LOW)
+	pass
 	
-init()
 if __name__ == "__main__":
-	show(sys.argv[1])
+	disp1602.lcd_message(1, sys.argv[1])
 
   
 

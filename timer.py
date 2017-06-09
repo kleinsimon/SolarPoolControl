@@ -5,7 +5,7 @@ import time, config, runvars, control
 state=2
 
 def run(stop_event):
-	global state
+	global state, night
 
 	while not stop_event.wait(2):
 		now = int(time.strftime("%H%M"))

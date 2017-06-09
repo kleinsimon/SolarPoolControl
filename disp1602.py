@@ -57,20 +57,6 @@ def lcd_send_byte(bits, mode):
 	time.sleep(E_DELAY)  
 
 def display_init():
-	lcd_send_byte(0x33, LCD_CMD)
-	lcd_send_byte(0x32, LCD_CMD)
-	lcd_send_byte(0x28, LCD_CMD)
-	lcd_send_byte(0x0C, LCD_CMD)  
-	lcd_send_byte(0x06, LCD_CMD)
-	lcd_send_byte(0x01, LCD_CMD)  
-
-def lcd_message(message):
-	message = message.ljust(LCD_WIDTH," ")  
-	for i in range(LCD_WIDTH):
-	  lcd_send_byte(ord(message[i]),LCD_CHR)
-	
-if __name__ == '__main__':
-	# initialisieren
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setwarnings(False)
 	GPIO.setup(LCD_E, GPIO.OUT)
@@ -79,17 +65,32 @@ if __name__ == '__main__':
 	GPIO.setup(LCD_DATA5, GPIO.OUT)
 	GPIO.setup(LCD_DATA6, GPIO.OUT)
 	GPIO.setup(LCD_DATA7, GPIO.OUT)
-
-	display_init()
-
 	
+	lcd_send_byte(0x33, LCD_CMD)
+	lcd_send_byte(0x32, LCD_CMD)
+	lcd_send_byte(0x28, LCD_CMD)
+	lcd_send_byte(0x0C, LCD_CMD)  
+	lcd_send_byte(0x06, LCD_CMD)
+	lcd_send_byte(0x01, LCD_CMD)  
+
+def lcd_message(line, message):
+	if line == 1:
+		lcd_send_byte(LCD_LINE_1, LCD_CMD)
+	elif line == 2:
+		lcd_send_byte(LCD_LINE_2, LCD_CMD)
+
+	message = message.ljust(LCD_WIDTH," ")  
+	for i in range(LCD_WIDTH):
+	  lcd_send_byte(ord(message[i]),LCD_CHR)
+
+display_init()
+if __name__ == '__main__':
+	# initialisieren
 	lcd_send_byte(LCD_LINE_1, LCD_CMD)
-	lcd_message("Zeit:")
+	lcd_message("Starting... Zeit:")
 	lcd_send_byte(LCD_LINE_2, LCD_CMD)
 	lcd_message(time.strftime("%H:%M"))
-	
-	
-	
+
 	# time.sleep(4)
 	
 	# msg1 = "Dies ist ein"

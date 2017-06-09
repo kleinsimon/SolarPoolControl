@@ -3,9 +3,10 @@
 import config, sensor, display, runvars
 
 state=0
+dt=0
 
 def run(stop_event):
-	global state
+	global state, dt
 
 	while not stop_event.wait(1):
 		s = sensor.getValues()

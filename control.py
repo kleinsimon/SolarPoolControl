@@ -27,7 +27,7 @@ def setmode(m):
 	if m!=runvars.mode:
 		print("Switch to mode "+str(m))
 		runvars.mode = m
-		display.show(modechar[m])
+		#display.show(modechar[m])
 		saveMode(m)
 
 def setstate():
@@ -75,7 +75,7 @@ def main():
 			if getmode(pins[m-1]):
 				setmode(m)
 		setstate()
-
+		display.showData()
 		runvars.waittime+=config.runtimeSleep
 		time.sleep(config.runtimeSleep)
 

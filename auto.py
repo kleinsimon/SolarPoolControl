@@ -10,7 +10,7 @@ def run(stop_event):
 
 	while not stop_event.wait(1):
 		s = sensor.getValues()
-		if len(s) >= 2:
+		if len(s) >= 2 and s[0]*s[1] >= 0:
 			dt = abs(s[0]-s[1])
 			print ("T1: {:.2f}, T2: {:.2f}, Diff: {:.2f}".format(s[0], s[1], dt))
 
@@ -26,6 +26,3 @@ def run(stop_event):
 
 		else:
 			print ("Sensors not working")
-			display.show("e")
-			sensor.initSensors()
-

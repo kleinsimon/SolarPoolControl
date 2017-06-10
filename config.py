@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 
 ##Standardmodus nach dem Einschalten des Controllers:
-modeNames = ["Auto","Intervall","An", "Aus"]
-stateNames = ["Pumpe Aus","Pumpe An"]
+modeNames = ["Auto","Timer","An", "Aus"]
+stateNames = ["P0","P1"]
+nightName = "Nacht"
+
 defaultMode = 2
 # Befehl zum Einschalten:
 commandOn=["pilight-send","-S", "127.0.0.1","-P", "5000","-p", "quigg_gt9000", "-i", "656022", "-u", "1", "-t"]

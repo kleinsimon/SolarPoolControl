@@ -1,5 +1,3 @@
-#!/usr/local/bin/python3.5
-# -*- coding: utf-8 -*-
 import re, os, time, sys, config, threading
 
 sensors=None
@@ -28,7 +26,9 @@ def initSensors():
 	except:
 		sensors=None
 	if len(sensors)<2:
-		initSensors()
+		#time.sleep(10)
+		#initSensors()
+		pass
 
 
 def startScans():
@@ -58,6 +58,7 @@ class Sensor:
 						obj.value = (float(m.group(2)) / 1000.0)
 		except IOError as e:
 			print (time.strftime("%x %X"), "Error reading", obj.path, ": ", e)
+			time.sleep(10)
 	
 	def scan(obj, stopevent):
 		while not stopevent.wait(1):
@@ -76,4 +77,3 @@ startScans()
 if __name__ == "__main__":
 	print (getValues())
 
-  

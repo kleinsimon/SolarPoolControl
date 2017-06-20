@@ -18,14 +18,14 @@ def doSwitch(on):
 
 	if (on):
 		call(config.commandOn)
-		call(config.commandOn)
+		#call(config.commandOn)
 		print('Switch on')
 		curState=1
 		lastToggle=time.time()
 		
 	elif (not on):
 		call(config.commandOff)
-		call(config.commandOff)
+		#call(config.commandOff)
 		print('Switch off')
 		curState=0
 		lastToggle=time.time()
@@ -41,5 +41,3 @@ if __name__ == "__main__":
 		switch(True)
 	elif command == "off":
 		switch(False)
-
-  

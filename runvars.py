@@ -8,6 +8,12 @@ mode=0
 lastSwitchOnTime=0
 lastTemps=[0]
 
+btnMode=0 #0==Main, 1==Time Set
+btnLock=False
+setH=0
+setM=0
+setPos=0
+
 def addTemp(temp):
 	global lastTemps
 	lastTemps.append(temp)

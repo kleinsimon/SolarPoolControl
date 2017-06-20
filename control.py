@@ -1,33 +1,14 @@
 #!/usr/local/bin/python3.5
 # -*- coding: utf-8 -*-
-import os, time, sys, subprocess, threading, pump, auto, interval, config, runvars, timer, display
-import RPi.GPIO as GPIO
+import os, time, sys, subprocess, threading, pump, auto, interval, config, runvars, timer, display, buttons
 
 modechar=[0,"a","i","1","0"]
-
-def getmode(pin):
-	try:
-		#r = subprocess.check_output(["gpio","read",str(pin)])
-		r = GPIO.input(pin)
-		return int(r)==0
-	except subprocess.CalledProcessError as e:
-		print ("Error getting status of gpio")
-
-def initgpio(pins):
-	for p in pins:
-		GPIO.setmode(GPIO.BCM)
-		GPIO.setwarnings(False)
-		GPIO.setup(p, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-		
-		#subprocess.call(["gpio","mode",str(p),"in"])
-		#subprocess.call(["gpio","mode",str(p),"up"])
 		
 def setmode(m):
 	global modechar
 	if m!=runvars.mode:
 		print("Switch to mode "+str(m))
 		runvars.mode = m
-		#display.show(modechar[m])
 		saveMode(m)
 
 def setstate():
@@ -63,22 +44,17 @@ def readSavedMode():
 	return m
 	
 def main():
-	modes=[1,2,3,4]
-	#pins=[24,25,22,23]
-	pins = config.gpioBtnPins
-
-	initgpio(pins)
 	setmode(readSavedMode())
 
-	while 1:
-		for m in modes:
-			if getmode(pins[m-1]):
-				setmode(m)
+
+	while True:
 		setstate()
 		display.showData()
 		runvars.waittime+=config.runtimeSleep
 		time.sleep(config.runtimeSleep)
 
+
+		
 if __name__ == "__main__":
 	stopthread=threading.Event()
 	thread = threading.Thread(target=auto.run, args=(stopthread,), name='pumpauto')
@@ -92,4 +68,8 @@ if __name__ == "__main__":
 	threadt = threading.Thread(target=timer.run, args=(threadtstop,), name='pumptimer')
 	threadt.start()
 	
-	main()
+	try:
+		main()
+		
+	except KeyboardInterrupt:
+		GPIO.cleanup()

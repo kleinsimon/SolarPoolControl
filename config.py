@@ -68,3 +68,8 @@ gpioDotPin=25
 
 #Control GPIOs 1 2 3 4
 gpioBtnPins=[19,26,6,13]
+
+#Welche Knöpfe um die Zeit zu setzen? 
+timeMask=[True, False, False, True]
+#Knöpfe für hoch / runter, weiter, zurück
+timeSetBtns=[0, 1, 2, 3]
